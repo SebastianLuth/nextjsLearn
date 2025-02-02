@@ -15,6 +15,8 @@ import {
 } from "~/features/forms/register";
 import Link from "next/link";
 import { RegisterFormInner } from "../components/RegisterFormInner";
+import { api } from "~/utils/api";
+import { toast } from "sonner";
 
 const RegisterPage = () => {
 
@@ -22,8 +24,19 @@ const RegisterPage = () => {
     resolver: zodResolver(registerFormSchema),
   });
 
+  const {mutate : registerUser, isPending : registerUserIsPending} = api.auth.register.useMutation({
+    onSuccess : () => {
+        toast.success("Berhasil Membuat Akun")
+        form.setValue("email","")
+        form.setValue("password","")
+    },
+    onError : ()=> {
+        toast.error("Gagal Membuat Akun")
+    }, 
+  });
+
   const handleRegisterSubmit = (values: RegisterFormSchema) => {
-    alert("Created Successfully");
+    registerUser(values);
   };
 
   return (
@@ -41,7 +54,7 @@ const RegisterPage = () => {
 
           <CardContent>
             <Form {...form}>
-                <RegisterFormInner handleRegisterSubmit={handleRegisterSubmit}/>
+                <RegisterFormInner handleRegisterSubmit={handleRegisterSubmit} isLoading={registerUserIsPending}/>
             </Form>
 
             {/* Continue With Google */}

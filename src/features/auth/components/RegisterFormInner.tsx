@@ -8,10 +8,11 @@ import { Label } from "~/components/ui/label";
 import { type RegisterFormSchema } from "~/features/forms/register";
 
 type RegisterFormInnerProps = {
-    handleRegisterSubmit: (values: RegisterFormSchema) => void
+    handleRegisterSubmit: (values: RegisterFormSchema) => void,
+    isLoading?: boolean
 }
 
-export const RegisterFormInner = ({handleRegisterSubmit} : RegisterFormInnerProps) => {
+export const RegisterFormInner = ({handleRegisterSubmit, isLoading} : RegisterFormInnerProps) => {
     const [showPassword , setShowPassword] = useState<boolean>(false)
     const form = useFormContext<RegisterFormSchema>()
 
@@ -60,7 +61,7 @@ export const RegisterFormInner = ({handleRegisterSubmit} : RegisterFormInnerProp
         />
         Show Password
       </Label>
-      <Button type="submit" className="mt-4 w-full">
+      <Button type="submit" className="mt-4 w-full" disabled={isLoading}>
         Buat Akun
       </Button>
     </form>
