@@ -9,10 +9,11 @@ import { type RegisterFormSchema } from "~/features/forms/register";
 
 type RegisterFormInnerProps = {
     handleRegisterSubmit: (values: RegisterFormSchema) => void,
-    isLoading?: boolean
+    isLoading?: boolean,
+    buttonText?: string
 }
 
-export const RegisterFormInner = ({handleRegisterSubmit, isLoading} : RegisterFormInnerProps) => {
+export const RegisterFormInner = ({handleRegisterSubmit, isLoading, buttonText} : RegisterFormInnerProps) => {
     const [showPassword , setShowPassword] = useState<boolean>(false)
     const form = useFormContext<RegisterFormSchema>()
 
@@ -62,7 +63,7 @@ export const RegisterFormInner = ({handleRegisterSubmit, isLoading} : RegisterFo
         Show Password
       </Label>
       <Button type="submit" className="mt-4 w-full" disabled={isLoading}>
-        Buat Akun
+        {buttonText ?? "Daftar"}
       </Button>
     </form>
   );
